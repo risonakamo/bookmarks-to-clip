@@ -24,13 +24,16 @@ function PopupMain():JSX.Element
     }
 
     chrome.bookmarks.getSubTree(targetId,(result:BookmarkTreeNode[])=>{
-      console.log(extractBookmarkUrls(result[0]));
+      var extractedUrls:string=extractBookmarkUrls(result[0]).join("\n");
+      navigator.clipboard.writeText(extractedUrls);
     });
   }
 
   const invalidLinkClass={showing:inputInvalid};
 
   return <>
+    <h2>bookmarks url copy</h2>
+    <p className="title">enter bookmarks url:</p>
     <input type="text" className="link-input" ref={inputBox}/>
     <a href="" className="execute-button" onClick={executeButtonClick}>get links</a>
     <p className={cx("invalid-message",invalidLinkClass)}>invalid link</p>
