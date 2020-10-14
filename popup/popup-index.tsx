@@ -15,13 +15,17 @@ function PopupMain():JSX.Element
   function executeButtonClick(e:React.MouseEvent):void
   {
     e.preventDefault();
-    var targetId:number|null=extractBookmarkId(inputBox.current!.value);
+    var targetId:string|null=extractBookmarkId(inputBox.current!.value);
 
     if (!targetId)
     {
       setInputInvalid(true);
       return;
     }
+
+    chrome.bookmarks.getSubTree(targetId,(result:BookmarkTreeNode[])=>{
+      console.log(extractBookmarkUrls(result[0]));
+    });
   }
 
   const invalidLinkClass={showing:inputInvalid};
@@ -34,7 +38,7 @@ function PopupMain():JSX.Element
 }
 
 // attempt to extract bookmark id from a url or null if not a valid url
-function extractBookmarkId(url:string):number|null
+function extractBookmarkId(url:string):string|null
 {
   // match[1]: the id
   var matched:RegExpMatchArray|null=url.match(/chrome:\/\/bookmarks\/\?id=(\d+)/);
@@ -44,7 +48,26 @@ function extractBookmarkId(url:string):number|null
     return null;
   }
 
-  return parseInt(matched[1]);
+  return matched[1];
+}
+
+// given a bookmark node representing one folder, return all the urls of the bookmarks directly in
+// that folder (non-recursive)
+function extractBookmarkUrls(bookmarksNode:BookmarkTreeNode):string[]
+{
+  if (!bookmarksNode.children)
+  {
+    return [];
+  }
+
+  // filter out all folders
+  var bookmarks:BookmarkTreeNode[]=bookmarksNode.children.filter((x:BookmarkTreeNode)=>{
+    return !("children" in x);
+  });
+
+  return bookmarks.map((x:BookmarkTreeNode)=>{
+    return x.url!;
+  });
 }
 
 function main()
