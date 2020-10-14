@@ -8,6 +8,7 @@ function PopupMain():JSX.Element
 {
   //if the input was invalid
   const [inputInvalid,setInputInvalid]=useState<boolean>(false);
+  const [successCount,setSuccessCount]=useState<number>(-1);
 
   const inputBox=useRef<HTMLInputElement>(null);
 
@@ -24,12 +25,24 @@ function PopupMain():JSX.Element
     }
 
     chrome.bookmarks.getSubTree(targetId,(result:BookmarkTreeNode[])=>{
-      var extractedUrls:string=extractBookmarkUrls(result[0]).join("\n");
-      navigator.clipboard.writeText(extractedUrls);
+      if (!result)
+      {
+        setInputInvalid(true);
+        return;
+      }
+
+      var extractedUrls:string[]=extractBookmarkUrls(result[0]);
+      var extractedUrlText:string=extractedUrls.join("\n");
+
+      navigator.clipboard.writeText(extractedUrlText);
+      setInputInvalid(false);
+      setSuccessCount(extractedUrls.length);
     });
   }
 
   const invalidLinkClass={showing:inputInvalid};
+  const successClass={showing:successCount>=0};
+  const successText:string=`copied ${successCount} to clipboard`;
 
   return <>
     <h2>bookmarks url copy</h2>
@@ -37,6 +50,7 @@ function PopupMain():JSX.Element
     <input type="text" className="link-input" ref={inputBox}/>
     <a href="" className="execute-button" onClick={executeButtonClick}>get links</a>
     <p className={cx("invalid-message",invalidLinkClass)}>invalid link</p>
+    <p className={cx("success",successClass)}>{successText}</p>
   </>;
 }
 
