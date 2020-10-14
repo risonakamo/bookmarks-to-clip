@@ -3,7 +3,7 @@
     "name":"bookmarks to clip",
     "short_name":"bmclip",
     "description":"copy links of bookmarks in target bookmark folder to clipboard",
-    "version":"0.0.0",
+    "version":"1.0.0",
     "homepage_url":"https://github.com/risonakamo/bookmarks-to-clip",
 
     "permissions":[
