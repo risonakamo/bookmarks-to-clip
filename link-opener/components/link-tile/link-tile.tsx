@@ -2,10 +2,17 @@ import React from "react";
 
 import "./link-tile.less";
 
-export default function LinkTile():JSX.Element
+interface LinkTileProps
 {
-  return <div className="link-tile selected">
-    <img src="chrome://favicon/http://www.dlsite.com/maniax/circle/profile/=/maker_id/RG19442.html"/>
-    <p>blue arrow garden サークルプロフィール | DLsite Maniax - 成人向け</p>
+  link:string
+}
+
+export default function LinkTile(props:LinkTileProps):JSX.Element
+{
+  const iconLink:string=`chrome://favicon/${props.link}`;
+
+  return <div className="link-tile">
+    <img src={iconLink}/>
+    <p>{props.link}</p>
   </div>;
 }
