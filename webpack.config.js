@@ -6,7 +6,8 @@ const ForkTsCheckerWebpackPlugin=require("fork-ts-checker-webpack-plugin");
 module.exports={
     mode:"development",
     entry:{
-        popup:"./popup/popup-index.tsx"
+        popup:"./popup/popup-index.tsx",
+        linkopen:"./link-opener/link-open-index.tsx"
     },
     output:{
         path:`${__dirname}/build`,
@@ -47,12 +48,12 @@ module.exports={
         // new CopyPlugin(),
     ],
 
-    // optimization:{
-    //     splitChunks:{
-    //         chunks:"all",
-    //         automaticNameDelimiter:"-"
-    //     }
-    // },
+    optimization:{
+        splitChunks:{
+            chunks:"all",
+            automaticNameDelimiter:"-"
+        }
+    },
 
     resolve:{
         extensions:[".tsx",".ts",".jsx",".js"]

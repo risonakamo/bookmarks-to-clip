@@ -40,6 +40,12 @@ function PopupMain():JSX.Element
     });
   }
 
+  // open link opener page
+  function openLinkOpenerPage(e:React.MouseEvent):void
+  {
+    chrome.tabs.create({url:"../link-opener/link-open-index.html"});
+  }
+
   const invalidLinkClass={showing:inputInvalid};
   const successClass={showing:successCount>=0};
   const successText:string=`copied ${successCount} to clipboard`;
@@ -51,6 +57,7 @@ function PopupMain():JSX.Element
     <a href="" className="execute-button" onClick={executeButtonClick}>get links</a>
     <p className={cx("invalid-message",invalidLinkClass)}>invalid link</p>
     <p className={cx("success",successClass)}>{successText}</p>
+    <a href="" onClick={openLinkOpenerPage}>link opener page</a>
   </>;
 }
 
