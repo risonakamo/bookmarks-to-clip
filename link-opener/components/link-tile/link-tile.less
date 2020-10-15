@@ -1,0 +1,45 @@
+@import (reference) "../../link-open-index.less";
+
+.link-tile
+{
+    display: inline-block;
+    width: 80px;
+    height: 90px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 10px 5px;
+    margin: 2px;
+    transition: background @main-transition-time;
+
+    p
+    {
+        height: 70px;
+        overflow: hidden;
+    }
+
+    &.selected
+    {
+        background: @selected-blue;
+
+        &:hover
+        {
+            background: fade(@selected-blue,90%);
+        }
+    }
+
+    &:hover
+    {
+        background: fade(@selected-blue,20%);
+    }
+
+    &.faded
+    {
+        opacity: .3;
+
+        &:hover
+        {
+            background: transparent;
+        }
+    }
+}

@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import LinkTile from "./components/link-tile/link-tile";
+
 import "./link-open-index.less";
 
 function LinkOpenMain():JSX.Element
 {
   return <>
-
+    <LinkTile/>
+    <LinkTile/>
   </>;
 }
 

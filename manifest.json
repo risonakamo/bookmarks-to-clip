@@ -8,7 +8,8 @@
 
     "permissions":[
         "tabs",
-        "bookmarks"
+        "bookmarks",
+        "chrome://favicon/"
     ],
 
     "browser_action":{
