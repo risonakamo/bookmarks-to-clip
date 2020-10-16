@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import ReactDOM from "react-dom";
 
 import LinkTile from "./components/link-tile/link-tile";
@@ -29,9 +29,11 @@ const _tempSampleLinks:string[]=[
   "https://chan.sankakucomplex.com/?tags=shadman",
   "https://chan.sankakucomplex.com/?tags=val_%28escc4347%29",
   "https://chan.sankakucomplex.com/?tags=ata_%28tsumari%29",
+  "https://chan.sankakucomplex.com/?tags=ata_%28tsumari%29",
   "https://chan.sankakucomplex.com/?tags=nekololisama",
   "https://chan.sankakucomplex.com/?tags=hiropon_%28hiroto21111%29",
   "https://chan.sankakucomplex.com/?tags=stmaster",
+  "https://go"
 ];
 
 function LinkOpenMain():JSX.Element
