@@ -48,6 +48,9 @@ function LinkOpenMain():JSX.Element
   }
 
   return <>
+    <div className="tool-bar">
+
+    </div>
     <div className="link-tiles">
       {generateLinkTiles()}
     </div>

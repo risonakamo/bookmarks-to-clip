@@ -4,7 +4,37 @@
 
 @main-transition-time: .15s;
 
+html
+{
+    height: 100%;
+}
+
+body
+{
+    height: 100%;
+    margin: 0;
+}
+
 p
 {
     margin: 0;
+}
+
+.main
+{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.tool-bar
+{
+    height: 60px;
+}
+
+.link-tiles
+{
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
 }
