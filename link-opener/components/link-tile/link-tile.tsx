@@ -8,6 +8,7 @@ interface LinkTileProps
   link:string //link this box will display
   index:number //index number to help with parent reference
   selected?:boolean //style this box as selected
+  inactive?:boolean //style this box as inactive
   onClick?:(index:number)=>void //tile click, returns the index number of this box
 }
 
@@ -39,7 +40,8 @@ export default function LinkTile(props:LinkTileProps):JSX.Element
 
   const iconLink:string=`chrome://favicon/${props.link}`;
   const tileClass={
-    selected:props.selected
+    selected:props.selected,
+    faded:props.inactive
   };
 
   return <div className={cx("link-tile",tileClass)} onClick={tileClick}>

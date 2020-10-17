@@ -41,6 +41,7 @@ interface BookmarkTileInfo
 {
   link:string
   selected:boolean
+  inactive:boolean
 }
 
 function LinkOpenMain():JSX.Element
@@ -59,7 +60,8 @@ function LinkOpenMain():JSX.Element
     settheCurrentLinks(_.shuffle(_.map(links,(x:string)=>{
       return {
         link:x,
-        selected:false
+        selected:false,
+        inactive:false
       };
     })));
   }
@@ -82,6 +84,27 @@ function LinkOpenMain():JSX.Element
     settheCurrentLinks(_.shuffle(theCurrentLinks));
   }
 
+  // open all selected links, deselect and mark them as inactive.
+  function openLinks():void
+  {
+    var selectedUrls:string[]=[];
+    settheCurrentLinks(_.map(theCurrentLinks,(x:BookmarkTileInfo)=>{
+      if (x.selected)
+      {
+        selectedUrls.push(x.link);
+        return {
+          ...x,
+          selected:false,
+          inactive:true
+        };
+      }
+
+      return x;
+    }));
+
+    openAllTabs(selectedUrls);
+  }
+
   var selectedCount:number=0;
   const generatedLinkTiles:JSX.Element[]=_.map(theCurrentLinks,(x:BookmarkTileInfo,i:number)=>{
     if (x.selected)
@@ -89,19 +112,29 @@ function LinkOpenMain():JSX.Element
       selectedCount++;
     }
 
-    return <LinkTile link={x.link} key={i} index={i} onClick={toggleSelectLinkTile} selected={x.selected}/>;
+    return <LinkTile link={x.link} key={i} index={i} onClick={toggleSelectLinkTile}
+      selected={x.selected} inactive={x.inactive}/>;
   });
 
   return <>
     <div className="tool-bar">
       <span className="selected-count">{selectedCount} selected</span>
-      <button>open selected links</button>
+      <button onClick={openLinks}>open selected links</button>
       <button onClick={shuffleLinks}>shuffle</button>
     </div>
     <div className="link-tiles">
       {generatedLinkTiles}
     </div>
   </>;
+}
+
+// open list of urls in new background tabs
+function openAllTabs(urls:string[]):void
+{
+  for (var x=0;x<urls.length;x++)
+  {
+    chrome.tabs.create({url:urls[x],active:false});
+  }
 }
 
 function main()
