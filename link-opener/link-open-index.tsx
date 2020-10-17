@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
 import ReactDOM from "react-dom";
+import _ from "lodash";
 
 import LinkTile from "./components/link-tile/link-tile";
 
@@ -52,15 +53,15 @@ function LinkOpenMain():JSX.Element
     loadLinks(_tempSampleLinks);
   },[]);
 
-  // set the current links
+  // set the current links. also shuffles them.
   function loadLinks(links:string[]):void
   {
-    settheCurrentLinks(links.map((x:string)=>{
+    settheCurrentLinks(_.shuffle(_.map(links,(x:string)=>{
       return {
         link:x,
         selected:false
       };
-    }));
+    })));
   }
 
   // link tile on click, toggle selected state
@@ -75,20 +76,30 @@ function LinkOpenMain():JSX.Element
     settheCurrentLinks(modifiedLinks);
   }
 
-  // create link tiles from current links state
-  function generateLinkTiles():JSX.Element[]
+  // shuffle the links
+  function shuffleLinks():void
   {
-    return theCurrentLinks.map((x:BookmarkTileInfo,i:number)=>{
-      return <LinkTile link={x.link} key={i} index={i} onClick={toggleSelectLinkTile} selected={x.selected}/>;
-    });
+    settheCurrentLinks(_.shuffle(theCurrentLinks));
   }
+
+  var selectedCount:number=0;
+  const generatedLinkTiles:JSX.Element[]=_.map(theCurrentLinks,(x:BookmarkTileInfo,i:number)=>{
+    if (x.selected)
+    {
+      selectedCount++;
+    }
+
+    return <LinkTile link={x.link} key={i} index={i} onClick={toggleSelectLinkTile} selected={x.selected}/>;
+  });
 
   return <>
     <div className="tool-bar">
-
+      <span className="selected-count">{selectedCount} selected</span>
+      <button>open selected links</button>
+      <button onClick={shuffleLinks}>shuffle</button>
     </div>
     <div className="link-tiles">
-      {generateLinkTiles()}
+      {generatedLinkTiles}
     </div>
   </>;
 }
