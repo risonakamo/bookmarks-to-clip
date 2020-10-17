@@ -63,11 +63,23 @@ function LinkOpenMain():JSX.Element
     }));
   }
 
+  // link tile on click, toggle selected state
+  function toggleSelectLinkTile(index:number):void
+  {
+    var modifiedLinks:BookmarkTileInfo[]=[...theCurrentLinks];
+    modifiedLinks[index]={
+      ...modifiedLinks[index],
+      selected:!modifiedLinks[index].selected
+    };
+
+    settheCurrentLinks(modifiedLinks);
+  }
+
   // create link tiles from current links state
   function generateLinkTiles():JSX.Element[]
   {
     return theCurrentLinks.map((x:BookmarkTileInfo,i:number)=>{
-      return <LinkTile link={x.link} key={i} index={i}/>;
+      return <LinkTile link={x.link} key={i} index={i} onClick={toggleSelectLinkTile} selected={x.selected}/>;
     });
   }
 
