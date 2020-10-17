@@ -36,16 +36,38 @@ const _tempSampleLinks:string[]=[
   "https://go"
 ];
 
+interface BookmarkTileInfo
+{
+  link:string
+  selected:boolean
+}
+
 function LinkOpenMain():JSX.Element
 {
   // the currently loaded links
-  const [theCurrentLinks,settheCurrentLinks]=useState<string[]>(_tempSampleLinks);
+  const [theCurrentLinks,settheCurrentLinks]=useState<BookmarkTileInfo[]>([]);
+
+  // loading sample links
+  useEffect(()=>{
+    loadLinks(_tempSampleLinks);
+  },[]);
+
+  // set the current links
+  function loadLinks(links:string[]):void
+  {
+    settheCurrentLinks(links.map((x:string)=>{
+      return {
+        link:x,
+        selected:false
+      };
+    }));
+  }
 
   // create link tiles from current links state
   function generateLinkTiles():JSX.Element[]
   {
-    return theCurrentLinks.map((x:string,i:number)=>{
-      return <LinkTile link={x} key={i}/>;
+    return theCurrentLinks.map((x:BookmarkTileInfo,i:number)=>{
+      return <LinkTile link={x.link} key={i}/>;
     });
   }
 
