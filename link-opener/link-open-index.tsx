@@ -67,7 +67,7 @@ function LinkOpenMain():JSX.Element
   function generateLinkTiles():JSX.Element[]
   {
     return theCurrentLinks.map((x:BookmarkTileInfo,i:number)=>{
-      return <LinkTile link={x.link} key={i}/>;
+      return <LinkTile link={x.link} key={i} index={i}/>;
     });
   }
 
