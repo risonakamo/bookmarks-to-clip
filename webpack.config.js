@@ -57,7 +57,6 @@ module.exports={
     stats:{
         entrypoints:false,
         modules:false,
-        chunks:false,
-        assets:false
+        chunks:false
     }
 };
