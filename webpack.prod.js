@@ -14,8 +14,12 @@ module.exports=merge(devConfig,{
         new CopyPlugin({
             patterns:[
                 {
-                    from:"popup",
-                    to:"../popup"
+                    from:"popup/popup-index.html",
+                    to:"../popup/"
+                },
+                {
+                    from:"link-opener/link-open-index.html",
+                    to:"../link-opener/"
                 },
                 {
                     from:"manifest.json",
